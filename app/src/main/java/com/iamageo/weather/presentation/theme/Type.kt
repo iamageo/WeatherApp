@@ -1,4 +1,4 @@
-package com.iamageo.weather.ui.theme
+package com.iamageo.weather.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
