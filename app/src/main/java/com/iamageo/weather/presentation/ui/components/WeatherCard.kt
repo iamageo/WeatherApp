@@ -53,18 +53,27 @@ fun WeatherCard(
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Image(
-                    painter = painterResource(id = data.weatherType.iconRes),
-                    contentDescription = null,
-                    modifier = Modifier.width(200.dp)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "${data.temperatureCelcius}ºC", fontSize = 50.sp, color = Color.White)
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(text = data.weatherType.weatherDesc, fontSize = 20.sp, color = Color.White)
-                Spacer(modifier = Modifier.height(32.dp))
+                Column (
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                        ){
+                    Image(
+                        painter = painterResource(id = data.weatherType.iconRes),
+                        contentDescription = null,
+                        modifier = Modifier.width(200.dp)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "${data.temperatureCelcius}ºC",
+                        fontSize = 50.sp,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(text = data.weatherType.weatherDesc, fontSize = 20.sp, color = Color.White)
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
                 Row(
-                    modifier = Modifier.height(32.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     WeatherDataDisplay(
@@ -94,4 +103,11 @@ fun WeatherCard(
 
     }
 
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview
+@Composable
+fun myCardPreview() {
+    WeatherCard(state = WeatherState(weatherInfo = null), backgroundColor = Color.Black)
 }
