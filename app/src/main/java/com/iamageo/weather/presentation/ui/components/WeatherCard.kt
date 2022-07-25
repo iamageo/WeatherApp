@@ -32,13 +32,11 @@ fun WeatherCard(
     backgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
-    state.weatherInfo?.currentWeatherData.let { data ->
+    state.weatherInfo?.currentWeatherData?.let { data ->
         Card(
             backgroundColor = backgroundColor,
             shape = RoundedCornerShape(10.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+            modifier = modifier.padding(16.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -46,13 +44,17 @@ fun WeatherCard(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "Todayç",
+                    text = "Today ${
+                        data.time.format(
+                            DateTimeFormatter.ofPattern("HH:mm")
+                        )
+                    }",
                     modifier = Modifier.align(Alignment.End),
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Image(
-                    painter = painterResource(id = data!!.weatherType.iconRes),
+                    painter = painterResource(id = data.weatherType.iconRes),
                     contentDescription = null,
                     modifier = Modifier.width(200.dp)
                 )
