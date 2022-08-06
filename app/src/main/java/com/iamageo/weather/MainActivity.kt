@@ -1,4 +1,4 @@
-package com.iamageo.weather.presentation
+package com.iamageo.weather
 
 import android.Manifest
 import android.os.Bundle
@@ -9,7 +9,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.iamageo.weather.presentation.theme.WeatherTheme
 import com.iamageo.weather.presentation.ui.WeatherViewModel
+import com.iamageo.weather.presentation.ui.components.LocationDisplay
 import com.iamageo.weather.presentation.ui.components.WeatherCard
 import com.iamageo.weather.presentation.ui.components.WeatherForecast
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,11 +52,21 @@ class MainActivity : ComponentActivity() {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.DarkGray)
+                            .background(Color.White)
                     ) {
-                        WeatherCard(state = viewModel.state, backgroundColor = Color.Gray)
+                        LocationDisplay(location = "Location")
+                        WeatherCard(state = viewModel.state, backgroundColor = MaterialTheme.colors.primary)
                         Spacer(modifier = Modifier.height(16.dp))
-                        WeatherForecast(state = viewModel.state)
+                        Row(
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState())
+                                .fillMaxWidth()
+                        ) {
+                            WeatherForecast(state = viewModel.state, day = 0)
+                            //WeatherForecast(state = viewModel.state, day = 1)
+                            //WeatherForecast(state = viewModel.state, day = 2)
+                            //WeatherForecast(state = viewModel.state, day = 3)
+                        }
                     }
                     if (viewModel.state.isLoading) {
                         CircularProgressIndicator(

@@ -5,6 +5,9 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -20,33 +23,43 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HourlyWeatherDisplay(
-    weatherData: WeatherData,
+    weatherData: List<WeatherData>,
     modifier: Modifier = Modifier,
-    textColor: Color = Color.White
+    textColor: Color = Color.White,
+    backgroundColor: Color = MaterialTheme.colors.secondary
 ) {
-    val formattedTime = remember(weatherData) {
-        weatherData.time.format(
-            DateTimeFormatter.ofPattern("HH:mm")
-        )
-    }
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text = formattedTime,
-            color = Color.LightGray
-        )
-        Image(
-            painter = painterResource(id = weatherData.weatherType.iconRes),
-            contentDescription = null,
-            modifier = Modifier.width(40.dp)
-        )
-        Text(text = "${weatherData.temperatureCelcius}ºC",
-            color = textColor,
-            fontWeight = FontWeight.Bold
+    weatherData.get(0).let { data ->
+        val formattedTime = remember(weatherData) {
+            data.time.format(
+                DateTimeFormatter.ofPattern("HH:mm")
             )
-        Spacer(modifier = Modifier.height(16.dp))
+        }
+        Card(
+            backgroundColor = backgroundColor,
+            shape = RoundedCornerShape(10.dp),
+        ) {
+            Column(
+                modifier = modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = formattedTime,
+                    color = Color.White
+                )
+                Image(
+                    painter = painterResource(id = data.weatherType.iconRes),
+                    contentDescription = null,
+                    modifier = Modifier.width(40.dp)
+                )
+                Text(
+                    text = "${data.temperatureCelcius}ºC",
+                    color = textColor,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
     }
+
 }
