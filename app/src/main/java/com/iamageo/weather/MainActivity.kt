@@ -9,8 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -55,18 +53,25 @@ class MainActivity : ComponentActivity() {
                             .background(Color.White)
                     ) {
                         LocationDisplay(location = "Location")
-                        WeatherCard(state = viewModel.state, backgroundColor = MaterialTheme.colors.primary)
+                        WeatherCard(
+                            state = viewModel.state,
+                            backgroundColor = MaterialTheme.colors.primary
+                        )
                         Spacer(modifier = Modifier.height(16.dp))
-                        Row(
+                        Column(
                             modifier = Modifier
-                                .verticalScroll(rememberScrollState())
-                                .fillMaxWidth()
+                                .background(Color.White)
                         ) {
                             WeatherForecast(state = viewModel.state, day = 0)
-                            //WeatherForecast(state = viewModel.state, day = 1)
-                            //WeatherForecast(state = viewModel.state, day = 2)
-                            //WeatherForecast(state = viewModel.state, day = 3)
+                            WeatherForecast(state = viewModel.state, day = 1)
+                            WeatherForecast(state = viewModel.state, day = 2)
+                            WeatherForecast(state = viewModel.state, day = 3)
+                            WeatherForecast(state = viewModel.state, day = 4)
+                            WeatherForecast(state = viewModel.state, day = 5)
+                            WeatherForecast(state = viewModel.state, day = 6)
+                            Spacer(modifier = Modifier.height(20.dp))
                         }
+
                     }
                     if (viewModel.state.isLoading) {
                         CircularProgressIndicator(
